@@ -1,0 +1,179 @@
+<!--
+  ~ Copyright 2019 GLEBSKY Sergiy Dubovik, WarnerJan Veldhuis
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<idea-plugin url="http://plugins.jetbrains.com/plugin/1124">
+    <id>Tasks</id>
+    <name>Tasks</name>
+    <description>
+        <![CDATA[
+        <p>I am considering rewriting this plugin from scratch. If you like to contribute some ideas, let me know on Github.</p>
+        <p/>
+        <p>A plugin for keeping a list of tasks. A todo-list if you like.</p>
+        <p>This plugin is a fork of the original plugin with permission of Sergiy Dubovik</p>
+        <p>To contact me directly: laosdeveloper@gmail.com</p>
+        ]]>
+    </description>
+    <change-notes>
+        <![CDATA[
+        <p><u><b>Version 1.8.5 changes</b></u></p>
+        <p>Bugfix</p>
+        <ul>
+            <li>Fixed icons in PHPSTORM 2019</li>
+        </ul>
+        <p><u><b>Version 1.8.4 changes</b></u></p>
+        <p>Enhancements
+        <ul>
+            <li>Updated the plugin to work with other applications built on the IntelliJ platform. (Tested with PyCharm 2017 and CLion 2017)</li>
+        </ul>
+
+        <p><u><b>Version 1.8.3 changes</b></u></p>
+        <p>Changes</p>
+        <ul>
+            <li>Updated to IntelliJ IDEA 2017.1</li>
+        </ul>
+        <p>Bugfixes</p>
+        <ul>
+            <li>Intention: switched content of before.java.template and after.java.template</li>
+            <li>Removed null from tooltip</li>
+            <li>AWT events are not allowed inside write action (https://github.com/NLSurfMan/tasks/issues/27)</li>
+        </ul>
+
+        <p><u><b>Version 1.8.2 changes</b></u></p>
+        <p>Bugfix</p>
+        <ul>
+            <li>"TaskSettings" appeared to be a reserved name. Had to change it to "TaskPluginSettings". Because of the name change, you will have to redo your settings</li>
+        </ul>
+        <p><u><b>Version 1.8 changes</b></u></p>
+        <p>Enhancements</p>
+        <ul>
+            <li>Full Drag and Drop support</li>
+            <li>Button for "Mark uncompleted"</li>
+            <li>Added frequently used functions on the toolbar</li>
+            <li>Tasks now have a long description</li>
+            <li>Start/stop buttons for keeping real-time track of spent time</li>
+            <li>Updated settings storage to Idea12 standards</li>
+            <li>Removed unnecessary code.</li>
+            <li>Made TaskSettings and TaskModel an applicationService</li>
+            <li>Expand/Collapse All buttons</li>
+            <li>Title can be edited directly in the tree by pressing F2</li>
+            <li>Changed e.isRightMouseButton() to e.isPopupTrigger()</li>
+        </ul>
+        <p>Bugfix</p>
+        <ul>
+            <li>updated to IntelliJ IDEA 19</li>
+            <li>Set default button on TaskForm</li>
+            <li>Disabled DnD when using filters and groups</li>
+            <li>Tree is updated per node, instead of an entire update</li>
+        </ul>
+        <p>Other</p>
+        <ul>
+            <li>Updated Copyright notice to 2019</li>
+        </ul>
+        ]]>
+    </change-notes>
+    <version>1.8.4</version>
+    <vendor email="nlsurfman@hotmail.com" url="https://github.com/Glebsky/tasks">
+         Gleb Kosyanov(Original author: WarnerJan Veldhuis, Sergiy Dubovik)
+    </vendor>
+
+    <idea-version since-build="145.0"/>
+    <depends>com.intellij.modules.lang</depends>
+
+    <resource-bundle>org.dubik.tasks.TasksBundle</resource-bundle>
+
+    <application-components>
+        <component>
+            <implementation-class>org.dubik.tasks.TasksApplicationComponent</implementation-class>
+        </component>
+    </application-components>
+
+    <project-components>
+        <component>
+            <implementation-class>org.dubik.tasks.TasksProjectComponent</implementation-class>
+        </component>
+    </project-components>
+
+    <actions>
+        <action id="TaskGroupByPriority" class="org.dubik.tasks.ui.actions.GroupByPriorityAction" text="Group by priority" description="Group by priority"/>
+        <action id="MarkCompletedAction" class="org.dubik.tasks.ui.actions.MarkCompletedAction" text="Mark completed" description="Mark task as completed" icon="/org/dubik/tasks/ui/icons/complete_task.png"/>
+        <action id="MarkNotCompletedAction" class="org.dubik.tasks.ui.actions.MarkNotCompletedAction" icon="/org/dubik/tasks/ui/icons/task.png" text="Mark as not completed" description="Mark task as not completed"/>
+        <action id="HighlightTaskAction" class="org.dubik.tasks.ui.actions.HighlightTaskAction" text="Highlight Task" description="Highlight task" icon="/org/dubik/tasks/ui/icons/star.png"/>
+        <action id="MoveTaskUpAction" class="org.dubik.tasks.ui.actions.MoveTaskUpAction" text="Move task up" icon="/org/dubik/tasks/ui/icons/moveUp_dark.svg" description="Move task up"/>
+        <action id="MoveTaskDownAction" class="org.dubik.tasks.ui.actions.MoveTaskDownAction" text="Move task down" icon="/org/dubik/tasks/ui/icons/moveDown_dark.svg" description="Move task down"/>
+        <action id="ToggleCompletedTaskVisibleAction" class="org.dubik.tasks.ui.actions.ToggleCompletedTaskVisibleAction" text="Hide completed tasks" icon="/org/dubik/tasks/ui/icons/hideToolWindow_dark.svg" description="Hide/unhide completed tasks"/>
+        <action id="NewChangelistAction" class="org.dubik.tasks.ui.actions.NewChangeListAction" text="Create New Change List" description="Creates new change list based on the task" icon="/org/dubik/tasks/ui/icons/newchangelist.png"/>
+        <action id="ExportToTextFileAction" class="org.dubik.tasks.ui.actions.ExportToTextFileAction" icon="/actions/export.png" text="Export Tasks to File" description="Exports all tasks to a text file or clipboard."/>
+        <action id="HighlightRedTaskAction" class="org.dubik.tasks.ui.actions.highlight.HighlightRedTaskAction" text="Red" description="Highlight task with red star" icon="/org/dubik/tasks/ui/icons/star_red.png"/>
+        <action id="HighlightYellowTaskAction" class="org.dubik.tasks.ui.actions.highlight.HighlightYellowTaskAction" text="Yellow" description="Highlight task with yellow star" icon="/org/dubik/tasks/ui/icons/star_yellow.png"/>
+        <action id="HighlightGreenTaskAction" class="org.dubik.tasks.ui.actions.highlight.HighlightGreenTaskAction" text="Green" description="Highlight task with green star" icon="/org/dubik/tasks/ui/icons/star_green.png"/>
+        <action id="AddNewTask" class="org.dubik.tasks.ui.actions.AddNewTaskAction" text="Add Task..." description="Add new task" icon="/org/dubik/tasks/ui/icons/add_dark.svg"/>
+        <action id="RemoveTaskAction" class="org.dubik.tasks.ui.actions.RemoveTaskAction" text="Remove Task" description="Remove selected task" icon="/org/dubik/tasks/ui/icons/remove_task.png"/>
+        <action id="TaskPropertyAction" class="org.dubik.tasks.ui.actions.TaskPropertyAction" text="Task properties" description="Task properties" icon="/org/dubik/tasks/ui/icons/properties_dark.svg"/>
+        <action id="StartTaskAction" class="org.dubik.tasks.ui.actions.StartTaskAction" text="Start Task" description="Starts the actual time for the selected task" icon="/org/dubik/tasks/ui/icons/start.svg"/>
+        <action id="StopTaskAction" class="org.dubik.tasks.ui.actions.StopTaskAction" text="Stop Task" description="Stops the actual time for the selected task" icon="/org/dubik/tasks/ui/icons/suspend_dark.svg"/>
+        <action id="ExpandAllTasks" class="org.dubik.tasks.ui.actions.ExpandAllAction" text="Expand all" description="Expands all nodes in the tree" icon="/org/dubik/tasks/ui/icons/expandall_dark.svg"/>
+        <action id="CollapseAllTasks" class="org.dubik.tasks.ui.actions.CollapseAllAction" text="Collapse all" description="Collapses all nodes in the tree" icon="/org/dubik/tasks/ui/icons/collapseall_dark.svg"/>
+
+        <group id="TasksActionGroup">
+            <reference ref="AddNewTask"/>
+            <reference ref="RemoveTaskAction"/>
+            <reference ref="TaskPropertyAction"/>
+            <separator/>
+            <reference ref="MarkCompletedAction"/>
+            <reference ref="MarkNotCompletedAction"/>
+            <reference ref="ToggleCompletedTaskVisibleAction"/>
+            <separator/>
+            <reference ref="ExpandAllTasks"/>
+            <reference ref="CollapseAllTasks"/>
+            <separator/>
+            <reference ref="ExportToTextFileAction"/>
+        </group>
+
+        <group id="TasksPopupGroup">
+            <reference ref="AddNewTask"/>
+            <reference ref="RemoveTaskAction"/>
+            <reference ref="MarkCompletedAction"/>
+            <reference ref="MarkNotCompletedAction"/>
+            <reference ref="ToggleCompletedTaskVisibleAction"/>
+            <separator/>
+            <reference ref="HighlightTaskAction"/>
+            <reference ref="TaskGroupByPriority"/>
+            <separator/>
+            <reference ref="TaskPropertyAction"/>
+        </group>
+
+        <group id="TasksAdditionalToolBarGroup">
+            <reference ref="MoveTaskUpAction"/>
+            <reference ref="MoveTaskDownAction"/>
+            <reference ref="NewChangelistAction"/>
+            <separator/>
+            <reference ref="StartTaskAction"/>
+            <reference ref="StopTaskAction"/>
+        </group>
+    </actions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceInterface="org.dubik.tasks.settings.TaskSettingsService" serviceImplementation="org.dubik.tasks.settings.TaskSettingsService"/>
+        <applicationService serviceInterface="org.dubik.tasks.model.ITaskModel" serviceImplementation="org.dubik.tasks.model.impl.TaskModel"/>
+        <applicationConfigurable instance="org.dubik.tasks.ui.forms.TasksSettingsForm"/>
+
+        <intentionAction>
+            <className>org.dubik.tasks.intention.CreateTaskFromTodoIntention</className>
+            <categoryKey>intention.familyname</categoryKey>
+        </intentionAction>
+    </extensions>
+
+</idea-plugin>
